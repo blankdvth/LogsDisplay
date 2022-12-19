@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+    <h1 class="is-size-1 title">Logs Display</h1>
+    <p>This website allows for the convenient display and linking of EdgeGamers JB & TTT logs. Including options for automated analysis, coloured highlighting, and more.</p>
+
+    <h2 class="is-size-2 subtitle">Have a Link?</h2>
+    <p>If you already have a hastebin link containing the logs (from <a href="https://hastebin.blankdvth.com" target="_blank">my paste service</a> specifically), simply replace the front portion of the URL from <code>hastebin</code> to <code>egologs</code>. For example, <code>https://hastebin.blankdvth.com/abcdefghi</code> becomes <code>https://egologs.blankdvth.com/abcdefghi</code>.</p>
+    <p>Make sure that these logs include the header and footer. If they do not, automated analysis will be disabled, leaving only syntax highlighting.</p>
+    <br>
+    <p>Alternatively, use the conversion box below:</p>
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <input class="input" type="text" placeholder="https://hastebin.blankdvth.com/hellothere" id="hastebinLink">
+        </div>
+        <div class="control">
+            <a class="button is-link" id="convertLink" >Go</a>
+        </div>
+    </div>
+
+    <h2 class="is-size-2 subtitle">Just have the Log?</h2>
+    <p>If you have the log, but not a link, you can paste it into the box below. This will automatically create a link for you, then redirect to the log display page.</p>
+    <form action="create" method="post">
+        <div class="field">
+            <div class="control">
+                <textarea class="textarea" name="log" placeholder="Paste your log here..." rows="15" required></textarea>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button class="button is-link">Create Link</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById("hastebinLink").addEventListener("keydown", function(e) {
+            if (e.code === "Enter") {
+                e.preventDefault();
+                document.getElementById("convertLink").click();
+            }
+        });
+        document.getElementById("convertLink").addEventListener("click", function() {
+            let link = document.getElementById("hastebinLink").value;
+            if (link.match(/^(https?:\/\/)?hastebin\.blankdvth\.com\/[a-z0-9.]+\/?$/)) {
+                if (!link.startsWith("http")) {
+                    link = "https://" + link;
+                }
+                link = link.replace("hastebin.blankdvth.com", "egologs.blankdvth.com");
+                window.location.href = link;
+            } else {
+                alert("This link is either not valid, or not from a whitelisted paste service. You can use the other form to paste the log directly.");
+            }
+        });
+    </script>
+{% endblock %}

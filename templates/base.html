@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link id="bulmasheet" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{  url_for('static', filename="base.css") }}">
+    <title>Logs Viewer - {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename="favicon.ico") }}">
+    {%  block head %}{% endblock %}
+</head>
+<body>
+{% if nonav is undefined %}
+    <nav class="navbar has-shadow is-white">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item"><img src="{{ url_for('static', filename='favicon.ico') }}" alt="Avatar" class="is-rounded"></a>
+        </div>
+
+        <div class="navbar-menu">
+            <div class="navbar-end">
+            <a class="navbar-item" href="https://github.com/blankdvth/LogsDisplay">Source Code</a>
+            <a class="navbar-item" href="https://status.blankdvth.com">Status</a>
+            {% if not index %}
+                <a href="/" class="navbar-item">Create Your Own</a>
+            {% endif %}
+            </div>
+    </nav>
+{% endif %}
+{% if self.body() %}
+    <div class="section"> {%  block body %}{% endblock %}</div>
+{% endif %}
+{% block body_nosection %}{% endblock %}
+<script src="{{ url_for('static', filename="base.js") }}"></script>
+</body>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            Site by <i>blank_dvth</i> |
+            Made with <a href="https://palletsprojects.com/p/flask/" target="_blank" class="is-italic">Flask</a> and <a
+                href="https://bulma.io" target="_blank" class="is-italic">Bulma</a> |
+            <a href="mailto:contact@blankdvth.com" target="_blank" class="is-italic">contact@blankdvth.com</a>
+        </p>
+    </div>
+</footer>
+</html>
